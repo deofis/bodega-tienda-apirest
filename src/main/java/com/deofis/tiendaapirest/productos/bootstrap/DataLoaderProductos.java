@@ -6,7 +6,6 @@ import com.deofis.tiendaapirest.productos.repositories.*;
 import com.deofis.tiendaapirest.productos.services.SkuService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +15,6 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-@Profile({"devbodega", "qabodega"})
 public class DataLoaderProductos implements CommandLineRunner {
 
     private final UnidadMedidaRepository unidadMedidaRepository;
