@@ -3,6 +3,7 @@ package com.deofis.tiendaapirest.productos.bootstrap;
 import com.deofis.tiendaapirest.productos.domain.*;
 import com.deofis.tiendaapirest.productos.exceptions.ProductoException;
 import com.deofis.tiendaapirest.productos.repositories.*;
+import com.deofis.tiendaapirest.productos.services.SkuService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-@Profile({"qa", "qaheroku", "dev"})
+@Profile({"devbodega", "qabodega"})
 public class DataLoaderProductos implements CommandLineRunner {
 
     private final UnidadMedidaRepository unidadMedidaRepository;
@@ -25,8 +26,11 @@ public class DataLoaderProductos implements CommandLineRunner {
     private final SubcategoriaRepository subcategoriaRepository;
     private final ProductoRepository productoRepository;
 
+    private final SkuService skuService;
+
+
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         if (this.unidadMedidaRepository.findByNombre("Unidad").isEmpty()) {
             UnidadMedida unidad = UnidadMedida.builder()
@@ -43,225 +47,143 @@ public class DataLoaderProductos implements CommandLineRunner {
         if (this.marcaRepository.findAll().size() == 0) {
             List<Marca> marcas = new ArrayList<>();
 
-            Marca puma = Marca.builder().nombre("Puma").build();
-            marcas.add(puma);
+            Marca terraCamiare = Marca.builder().nombre("Terra Camiare").build();
+            marcas.add(terraCamiare);
 
-            Marca topper = Marca.builder().nombre("Topper").build();
-            marcas.add(topper);
+            Marca indamaChardonnay = Marca.builder().nombre("Indama Chardonnay").build();
+            marcas.add(indamaChardonnay);
 
-            Marca jaguar = Marca.builder().nombre("Jaguar").build();
-            marcas.add(jaguar);
-
-            Marca jFoos = Marca.builder().nombre("John Foos").build();
-            marcas.add(jFoos);
-
-            Marca converse = Marca.builder().nombre("Converse").build();
-            marcas.add(converse);
-
-            Marca adidas = Marca.builder().nombre("Adidas").build();
-            marcas.add(adidas);
-
-            Marca nike = Marca.builder().nombre("Nike").build();
-            marcas.add(nike);
+            Marca alamos = Marca.builder().nombre("Alamos").build();
+            marcas.add(alamos);
 
             this.marcaRepository.saveAll(marcas);
         }
 
-        // Creación de propiedades y valores previo a la carga de prods y
-        // subcategorias
+        // Propiedades y valores.
 
-        // Colores
-        PropiedadProducto color = PropiedadProducto.builder()
-                .nombre("Color").variable(true).valores(new ArrayList<>()).build();
-        ValorPropiedadProducto blanco = ValorPropiedadProducto.builder()
-                .valor("Blanco").build();
-        ValorPropiedadProducto negro = ValorPropiedadProducto.builder()
-                .valor("Negro").build();
-        ValorPropiedadProducto amarillo = ValorPropiedadProducto.builder()
-                .valor("Amarillo").build();
-        ValorPropiedadProducto gris = ValorPropiedadProducto.builder()
-                .valor("Gris").build();
-        ValorPropiedadProducto rojo = ValorPropiedadProducto.builder()
-                .valor("Rojo").build();
-        color.getValores().add(blanco);
-        color.getValores().add(negro);
-        color.getValores().add(amarillo);
-        color.getValores().add(gris);
-        color.getValores().add(rojo);
+        PropiedadProducto varietal = PropiedadProducto.builder()
+                .nombre("Varietal").variable(true).valores(new ArrayList<>()).build();
+        ValorPropiedadProducto malbec = ValorPropiedadProducto.builder()
+                .valor("Malbec").build();
+        ValorPropiedadProducto ancellotta = ValorPropiedadProducto.builder()
+                .valor("Ancellotta").build();
+        ValorPropiedadProducto blend = ValorPropiedadProducto.builder()
+                .valor("Blend").build();
+        ValorPropiedadProducto cabernet = ValorPropiedadProducto.builder()
+                .valor("Cabernet Sauvignon").build();
+        ValorPropiedadProducto syrah = ValorPropiedadProducto.builder()
+                .valor("Syrah").build();
+        ValorPropiedadProducto merlot = ValorPropiedadProducto.builder()
+                .valor("Merlot").build();
+        ValorPropiedadProducto chardonnay = ValorPropiedadProducto.builder()
+                .valor("Chardonnay").build();
+        ValorPropiedadProducto sauvignon = ValorPropiedadProducto.builder()
+                .valor("Sauvignong Blanc").build();
+        ValorPropiedadProducto torrontes = ValorPropiedadProducto.builder()
+                .valor("Torrontes").build();
+        ValorPropiedadProducto viognier = ValorPropiedadProducto.builder()
+                .valor("Viognier").build();
+        ValorPropiedadProducto malbecRose = ValorPropiedadProducto.builder()
+                .valor("Malbec Rosé").build();
+        ValorPropiedadProducto cabernetFranc = ValorPropiedadProducto.builder()
+                .valor("Cabernet Franc").build();
+        ValorPropiedadProducto pinot = ValorPropiedadProducto.builder()
+                .valor("Pinot Noir").build();
+        ValorPropiedadProducto tannat = ValorPropiedadProducto.builder()
+                .valor("Tannat").build();
+        ValorPropiedadProducto petit = ValorPropiedadProducto.builder()
+                .valor("Petit Verdot").build();
+        varietal.getValores().add(malbec);
+        varietal.getValores().add(ancellotta);
+        varietal.getValores().add(blend);
+        varietal.getValores().add(cabernet);
+        varietal.getValores().add(syrah);
+        varietal.getValores().add(merlot);
+        varietal.getValores().add(chardonnay);
+        varietal.getValores().add(sauvignon);
+        varietal.getValores().add(torrontes);
+        varietal.getValores().add(viognier);
+        varietal.getValores().add(malbecRose);
+        varietal.getValores().add(cabernetFranc);
+        varietal.getValores().add(pinot);
+        varietal.getValores().add(tannat);
+        varietal.getValores().add(petit);
 
-        // Talles
-        PropiedadProducto talle = PropiedadProducto.builder()
-                .nombre("Talle").variable(true).valores(new ArrayList<>()).build();
-        ValorPropiedadProducto eu36 = ValorPropiedadProducto.builder()
-                .valor("36 EU").build();
-        ValorPropiedadProducto eu37 = ValorPropiedadProducto.builder()
-                .valor("37 EU").build();
-        ValorPropiedadProducto eu38 = ValorPropiedadProducto.builder()
-                .valor("38 EU").build();
-        ValorPropiedadProducto eu39 = ValorPropiedadProducto.builder()
-                .valor("39 EU").build();
-        talle.getValores().add(eu36);
-        talle.getValores().add(eu37);
-        talle.getValores().add(eu38);
-        talle.getValores().add(eu39);
+        PropiedadProducto dulzor = PropiedadProducto.builder()
+                .nombre("Dulzor").variable(true).valores(new ArrayList<>()).build();
+        ValorPropiedadProducto brut = ValorPropiedadProducto.builder()
+                .valor("Brut").build();
+        ValorPropiedadProducto extraBrut = ValorPropiedadProducto.builder()
+                .valor("Extra Brut").build();
+        ValorPropiedadProducto brutNature = ValorPropiedadProducto.builder()
+                .valor("Brut Nature").build();
+        dulzor.getValores().add(brut);
+        dulzor.getValores().add(extraBrut);
+        dulzor.getValores().add(brutNature);
 
-        // Carga de categorías y subcategorías
-
+        // Categorías y subcategorías
         if (this.categoriaRepository.findAll().size() == 0) {
-            // Listado de subcategorias
-            Subcategoria tenisH = Subcategoria.builder()
-                    .nombre("Tenis").codigo("TEN").propiedades(new ArrayList<>()).build();
-            tenisH.getPropiedades().add(color);
-            tenisH.getPropiedades().add(talle);
-
-            Subcategoria tenisM = Subcategoria.builder()
-                    .nombre("Tenis").codigo("TEN").propiedades(new ArrayList<>()).build();
-            tenisM.getPropiedades().add(color);
-            tenisM.getPropiedades().add(talle);
-
-            Subcategoria tenisN = Subcategoria.builder()
-                    .nombre("Tenis").codigo("TEN").propiedades(new ArrayList<>()).build();
-            tenisN.getPropiedades().add(color);
-            tenisN.getPropiedades().add(talle);
-
-            Subcategoria deportivoH = Subcategoria.builder()
-                    .nombre("Deportivo").codigo("DEP").propiedades(new ArrayList<>()).build();
-            deportivoH.getPropiedades().add(color);
-            deportivoH.getPropiedades().add(talle);
-
-            Subcategoria deportivoM = Subcategoria.builder()
-                    .nombre("Deportivo").codigo("DEP").propiedades(new ArrayList<>()).build();
-            deportivoM.getPropiedades().add(color);
-            deportivoM.getPropiedades().add(talle);
-
-            Subcategoria deportivoN = Subcategoria.builder()
-                    .nombre("Deportivo").codigo("DEP").propiedades(new ArrayList<>()).build();
-            deportivoN.getPropiedades().add(color);
-            deportivoN.getPropiedades().add(talle);
-
-            Subcategoria botasH = Subcategoria.builder()
-                    .nombre("Botas").codigo("BOT").propiedades(new ArrayList<>()).build();
-            botasH.getPropiedades().add(color);
-            botasH.getPropiedades().add(talle);
-
-            Subcategoria botasM = Subcategoria.builder()
-                    .nombre("Botas").codigo("BOT").propiedades(new ArrayList<>()).build();
-            botasM.getPropiedades().add(color);
-            botasM.getPropiedades().add(talle);
-
-            Subcategoria calzadoTrabajoH = Subcategoria.builder()
-                    .nombre("Calzado de trabajo").codigo("TRA").propiedades(new ArrayList<>()).build();
-            calzadoTrabajoH.getPropiedades().add(color);
-            calzadoTrabajoH.getPropiedades().add(talle);
-
-            Subcategoria calzadoTrabajoM = Subcategoria.builder()
-                    .nombre("Calzado de trabajo").codigo("TRA").propiedades(new ArrayList<>()).build();
-            calzadoTrabajoM.getPropiedades().add(color);
-            calzadoTrabajoM.getPropiedades().add(talle);
-
-            Subcategoria zapatosH = Subcategoria.builder()
-                    .nombre("Zapatos").codigo("ZAP").propiedades(new ArrayList<>()).build();
-            zapatosH.getPropiedades().add(color);
-            zapatosH.getPropiedades().add(talle);
-
-            Subcategoria zapatosM = Subcategoria.builder()
-                    .nombre("Zapatos").codigo("ZAP").propiedades(new ArrayList<>()).build();
-            zapatosM.getPropiedades().add(color);
-            zapatosM.getPropiedades().add(talle);
-
-            Subcategoria zapatosN = Subcategoria.builder()
-                    .nombre("Zapatos").codigo("ZAP").propiedades(new ArrayList<>()).build();
-            zapatosN.getPropiedades().add(color);
-            zapatosN.getPropiedades().add(talle);
-
-            Subcategoria mocasines = Subcategoria.builder()
-                    .nombre("Mocasines").codigo("MOC").propiedades(new ArrayList<>()).build();
-            mocasines.getPropiedades().add(color);
-            mocasines.getPropiedades().add(talle);
-
-            Subcategoria sandaliasH = Subcategoria.builder()
-                    .nombre("Sandalias").codigo("SAN").propiedades(new ArrayList<>()).build();
-            sandaliasH.getPropiedades().add(color);
-            sandaliasH.getPropiedades().add(talle);
-
-            Subcategoria sandaliasM = Subcategoria.builder()
-                    .nombre("Sandalias").codigo("SAN").propiedades(new ArrayList<>()).build();
-            sandaliasM.getPropiedades().add(color);
-            sandaliasM.getPropiedades().add(talle);
-
-            Subcategoria sandaliasN = Subcategoria.builder()
-                    .nombre("Sandalias").codigo("SAN").propiedades(new ArrayList<>()).build();
-            sandaliasN.getPropiedades().add(color);
-            sandaliasN.getPropiedades().add(talle);
-
-            Subcategoria crocsH = Subcategoria.builder()
-                    .nombre("Crocs").codigo("CRO").propiedades(new ArrayList<>()).build();
-            crocsH.getPropiedades().add(color);
-            crocsH.getPropiedades().add(talle);
-
-            Subcategoria crocsM = Subcategoria.builder()
-                    .nombre("Crocs").codigo("CRO").propiedades(new ArrayList<>()).build();
-            crocsM.getPropiedades().add(color);
-            crocsM.getPropiedades().add(talle);
-
-            Subcategoria crocsN = Subcategoria.builder()
-                    .nombre("Crocs").codigo("CRO").propiedades(new ArrayList<>()).build();
-            crocsN.getPropiedades().add(color);
-            crocsN.getPropiedades().add(talle);
-
-            // Listado de categorias
             List<Categoria> categorias = new ArrayList<>();
+            // Vinos
+            Subcategoria tinto = Subcategoria.builder()
+                    .nombre("Tinto").codigo("TIN").propiedades(new ArrayList<>()).build();
+            tinto.getPropiedades().add(varietal);
 
-            Categoria hombre = Categoria.builder()
-                    .nombre("Hombre").subcategorias(new ArrayList<>()).build();
-            hombre.getSubcategorias().add(tenisH);
-            hombre.getSubcategorias().add(deportivoH);
-            hombre.getSubcategorias().add(botasH);
-            hombre.getSubcategorias().add(calzadoTrabajoH);
-            hombre.getSubcategorias().add(zapatosH);
-            hombre.getSubcategorias().add(mocasines);
-            hombre.getSubcategorias().add(sandaliasH);
-            hombre.getSubcategorias().add(crocsH);
-            categorias.add(hombre);
+            Subcategoria blanco = Subcategoria.builder()
+                    .nombre("Blanco").codigo("BLA").propiedades(new ArrayList<>()).build();
+            blanco.getPropiedades().add(varietal);
 
-            Categoria mujer = Categoria.builder()
-                    .nombre("Mujer").subcategorias(new ArrayList<>()).build();
-            mujer.getSubcategorias().add(tenisM);
-            mujer.getSubcategorias().add(deportivoM);
-            mujer.getSubcategorias().add(botasM);
-            mujer.getSubcategorias().add(calzadoTrabajoM);
-            mujer.getSubcategorias().add(zapatosM);
-            mujer.getSubcategorias().add(sandaliasM);
-            mujer.getSubcategorias().add(crocsM);
-            categorias.add(mujer);
+            Subcategoria rosado = Subcategoria.builder()
+                    .nombre("Rosado").codigo("ROS").propiedades(new ArrayList<>()).build();
+            rosado.getPropiedades().add(varietal);
 
-            Categoria ninos = Categoria.builder()
-                    .nombre("Niños").subcategorias(new ArrayList<>()).build();
-            ninos.getSubcategorias().add(tenisN);
-            ninos.getSubcategorias().add(deportivoN);
-            ninos.getSubcategorias().add(zapatosN);
-            ninos.getSubcategorias().add(sandaliasN);
-            ninos.getSubcategorias().add(crocsN);
-            categorias.add(ninos);
+            Categoria vinos = Categoria.builder()
+                    .nombre("Vinos").subcategorias(new ArrayList<>()).build();
+            vinos.getSubcategorias().add(tinto);
+            vinos.getSubcategorias().add(blanco);
+            vinos.getSubcategorias().add(rosado);
+            categorias.add(vinos);
 
-            // Guardar categorias y subcategorias
+            // Espumantes
+            Subcategoria vinoEspumante = Subcategoria.builder()
+                    .nombre("Vino espumante").codigo("ESP").propiedades(new ArrayList<>()).build();
+            vinoEspumante.getPropiedades().add(dulzor);
+
+            Subcategoria champagne = Subcategoria.builder()
+                    .nombre("Champagne").codigo("CHA").propiedades(new ArrayList<>()).build();
+            champagne.getPropiedades().add(dulzor);
+
+            Subcategoria sidra = Subcategoria.builder()
+                    .nombre("Sidra").codigo("SID").propiedades(new ArrayList<>()).build();
+            sidra.getPropiedades().add(dulzor);
+
+            Categoria espumantes = Categoria.builder()
+                    .nombre("Espumantes").subcategorias(new ArrayList<>()).build();
+            espumantes.getSubcategorias().add(vinoEspumante);
+            espumantes.getSubcategorias().add(champagne);
+            espumantes.getSubcategorias().add(sidra);
+            categorias.add(espumantes);
+
             this.categoriaRepository.saveAll(categorias);
         }
 
         // Carga de productos
-
         if (this.productoRepository.findAll().size() == 0) {
-            // Listado de productos
             List<Producto> productos = new ArrayList<>();
 
-            Producto pumaStorm = Producto.builder()
-                    .nombre("Tenis Puma Storm Mesh")
-                    .descripcion("Conquista el mundo con estas deslumbrantes tenis de verano. Un diseño dinámico" +
-                            " inspirado en formas naturales que se combina con una parte superior de malla y una" +
-                            " entresuela de EVA moldeada por compresión para un verano liviano con" +
-                            " impacto visual.")
-                    .precio(67.99)
-                    .disponibilidadGeneral(50)
+            Producto naviraRose = Producto.builder()
+                    .nombre("Navira Rosé 2017")
+                    .descripcion("Cosecha: 2017.\n" +
+                            "Linea: Navira.\n" +
+                            "DATOS ANALÍTICOS:\n" +
+                            "ALCOHOL: 13,50 %\n" +
+                            "AZÚCAR RESIDUAL: 4,00 g/l\n" +
+                            "PH: 3,45\n" +
+                            "ACIDEZ TOTAL: 6,52 g/l\n" +
+                            "PRODUCCIÓN: 5.000 Botellas\n" +
+                            "SERVICIO: Entre 6-8°C")
+                    .precio(500.00)
+                    .disponibilidadGeneral(99)
                     .foto(null)
                     .imagenes(new ArrayList<>())
                     .activo(true)
@@ -272,76 +194,85 @@ public class DataLoaderProductos implements CommandLineRunner {
                     .unidadMedida(this.unidadMedidaRepository.getOne(1L))
                     .propiedades(new ArrayList<>())
                     .skus(new ArrayList<>()).build();
-            pumaStorm.getPropiedades().add(color);
-            pumaStorm.getPropiedades().add(talle);
-            pumaStorm.setDefaultSku(Sku.builder()
-                    .nombre(pumaStorm.getNombre())
-                    .descripcion(pumaStorm.getDescripcion())
-                    .fechaCreacion(pumaStorm.getFechaCreacion())
-                    .precio(pumaStorm.getPrecio())
-                    .disponibilidad(pumaStorm.getDisponibilidadGeneral())
-                    .defaultProducto(pumaStorm).build());
-            productos.add(pumaStorm);
+            naviraRose.getPropiedades().add(varietal);
+            naviraRose.setDefaultSku(Sku.builder()
+                    .nombre(naviraRose.getNombre())
+                    .descripcion(naviraRose.getDescripcion())
+                    .fechaCreacion(naviraRose.getFechaCreacion())
+                    .precio(naviraRose.getPrecio())
+                    .disponibilidad(naviraRose.getDisponibilidadGeneral())
+                    .defaultProducto(naviraRose).build());
+            Sku naviraRoseSku = Sku.builder()
+                    .nombre(naviraRose.getNombre())
+                    .descripcion(naviraRose.getDescripcion())
+                    //.variedades("95% Malbec - 5% Ancellotta.")
+                    .fechaCreacion(naviraRose.getFechaCreacion())
+                    .precio(naviraRose.getPrecio())
+                    .disponibilidad(naviraRose.getDisponibilidadGeneral())
+                    .valores(new ArrayList<>())
+                    .producto(naviraRose).build();
+            naviraRoseSku.getValores().add(malbec);
+            naviraRoseSku.getValores().add(ancellotta);
+            productos.add(naviraRose);
 
-            Producto pumaFlyer = Producto.builder()
-                    .nombre("Tenis Deportivos Puma Flyer Runner")
-                    .descripcion("Deportivos especiales para hacer running en tus tardes libres. Disfrute" +
-                            " del calzado deportivo de punta de una marca reconocida como es Puma.")
-                    .precio(57.99)
-                    .disponibilidadGeneral(29)
-                    .foto(null)
-                    .imagenes(new ArrayList<>())
-                    .activo(true)
-                    .destacado(false)
-                    .fechaCreacion(new Date())
-                    .subcategoria(this.subcategoriaRepository.getOne(4L))
-                    .marca(this.marcaRepository.getOne(1L))
-                    .unidadMedida(this.unidadMedidaRepository.getOne(1L))
-                    .propiedades(new ArrayList<>())
-                    .skus(new ArrayList<>()).build();
-            pumaFlyer.getPropiedades().add(color);
-            pumaFlyer.getPropiedades().add(talle);
-            pumaFlyer.setDefaultSku(Sku.builder()
-                    .nombre(pumaFlyer.getNombre())
-                    .descripcion(pumaFlyer.getDescripcion())
-                    .precio(pumaFlyer.getPrecio())
-                    .fechaCreacion(pumaFlyer.getFechaCreacion())
-                    .disponibilidad(pumaFlyer.getDisponibilidadGeneral())
-                    .defaultProducto(pumaFlyer).build());
-            productos.add(pumaFlyer);
-
-            Producto pumaBasket = Producto.builder()
-                    .nombre("Bota Puma Basket Fierce")
-                    .descripcion("Bota puma basket fierce moda urbano")
-                    .precio(47.99)
-                    .disponibilidadGeneral(49)
+            Producto naviraBlend = Producto.builder()
+                    .nombre("Navira Blend 2016")
+                    .descripcion("Cosecha: 2016.\n" +
+                            "Linea: Navira.\n" +
+                            "DATOS ANALÍTICOS:\n" +
+                            "ALCOHOL: 13,40 %\n" +
+                            "AZÚCAR RESIDUAL: 3,50 g/l\n" +
+                            "PH: 3,65\n" +
+                            "ACIDEZ TOTAL: 6,00 g/l\n" +
+                            "PRODUCCIÓN: 10.000 Botellas\n" +
+                            "SERVICIO: Entre 14-16°C")
+                    .precio(500.00)
+                    .disponibilidadGeneral(99)
                     .foto(null)
                     .imagenes(new ArrayList<>())
                     .activo(true)
                     .destacado(true)
                     .fechaCreacion(new Date())
-                    .subcategoria(this.subcategoriaRepository.getOne(7L))
+                    .subcategoria(this.subcategoriaRepository.getOne(1L))
                     .marca(this.marcaRepository.getOne(1L))
                     .unidadMedida(this.unidadMedidaRepository.getOne(1L))
                     .propiedades(new ArrayList<>())
                     .skus(new ArrayList<>()).build();
-            pumaBasket.getPropiedades().add(color);
-            pumaBasket.getPropiedades().add(talle);
-            pumaBasket.setDefaultSku(Sku.builder()
-                    .nombre(pumaBasket.getNombre())
-                    .descripcion(pumaBasket.getDescripcion())
-                    .precio(pumaBasket.getPrecio())
-                    .fechaCreacion(pumaBasket.getFechaCreacion())
-                    .disponibilidad(pumaBasket.getDisponibilidadGeneral())
-                    .defaultProducto(pumaBasket).build());
-            productos.add(pumaBasket);
 
-            Producto topperCapitan = Producto.builder()
-                    .nombre("Tenis Topper Capitán")
-                    .descripcion("Ideales para tu look urbano, cool y atemporal." +
-                            " Un clásico de Topper para todos los nostálgicos")
-                    .precio(43.00)
-                    .disponibilidadGeneral(49)
+            naviraBlend.getPropiedades().add(varietal);
+            naviraBlend.setDefaultSku(Sku.builder()
+                    .nombre(naviraBlend.getNombre())
+                    .descripcion(naviraBlend.getDescripcion())
+                    .fechaCreacion(naviraBlend.getFechaCreacion())
+                    .precio(naviraBlend.getPrecio())
+                    .disponibilidad(naviraBlend.getDisponibilidadGeneral())
+                    .defaultProducto(naviraBlend).build());
+            Sku naviraBlendSku = Sku.builder()
+                    .nombre(naviraBlend.getNombre())
+                    .descripcion(naviraBlend.getDescripcion())
+                    //.variedades("50% Merlot - 30% Tannat - 20% Petit Verdot.")
+                    .fechaCreacion(naviraBlend.getFechaCreacion())
+                    .precio(naviraBlend.getPrecio())
+                    .disponibilidad(naviraBlend.getDisponibilidadGeneral())
+                    .valores(new ArrayList<>())
+                    .producto(naviraBlend).build();
+            naviraBlendSku.getValores().add(merlot);
+            naviraBlendSku.getValores().add(tannat);
+            naviraBlendSku.getValores().add(petit);
+            productos.add(naviraBlend);
+
+            Producto indamaChardonnay = Producto.builder()
+                    .nombre("Indama Chardonnay")
+                    .descripcion("Cosecha: 2016.\n" +
+                            "DATOS ANALÍTICOS:\n" +
+                            "ALCOHOL: 13,80 %\n" +
+                            "AZÚCAR RESIDUAL: 3,50 g/l\n" +
+                            "PH: 3,36\n" +
+                            "ACIDEZ TOTAL: 7 g/l\n" +
+                            "PRODUCCIÓN: 15.000 Botellas\n" +
+                            "SERVICIO: Entre 6-8°C")
+                    .precio(700.00)
+                    .disponibilidadGeneral(99)
                     .foto(null)
                     .imagenes(new ArrayList<>())
                     .activo(true)
@@ -352,75 +283,75 @@ public class DataLoaderProductos implements CommandLineRunner {
                     .unidadMedida(this.unidadMedidaRepository.getOne(1L))
                     .propiedades(new ArrayList<>())
                     .skus(new ArrayList<>()).build();
-            topperCapitan.getPropiedades().add(color);
-            topperCapitan.getPropiedades().add(talle);
-            topperCapitan.setDefaultSku(Sku.builder()
-                    .nombre(topperCapitan.getNombre())
-                    .descripcion(topperCapitan.getDescripcion())
-                    .precio(topperCapitan.getPrecio())
-                    .fechaCreacion(topperCapitan.getFechaCreacion())
-                    .disponibilidad(topperCapitan.getDisponibilidadGeneral())
-                    .defaultProducto(topperCapitan).build());
-            productos.add(topperCapitan);
 
-            Producto topperUltralight = Producto.builder()
-                    .nombre("Tenis Deportivos Topper Ultralight")
-                    .descripcion("")
-                    .precio(38.99)
-                    .disponibilidadGeneral(25)
-                    .foto(null)
-                    .imagenes(new ArrayList<>())
-                    .activo(true)
-                    .destacado(true)
-                    .subcategoria(this.subcategoriaRepository.getOne(5L))
-                    .marca(this.marcaRepository.getOne(2L))
-                    .unidadMedida(this.unidadMedidaRepository.getOne(1L))
-                    .propiedades(new ArrayList<>())
-                    .skus(new ArrayList<>()).build();
-            topperUltralight.getPropiedades().add(color);
-            topperUltralight.getPropiedades().add(talle);
-            topperUltralight.setDefaultSku(Sku.builder()
-                    .nombre(topperUltralight.getNombre())
-                    .descripcion(topperUltralight.getDescripcion())
-                    .precio(topperUltralight.getPrecio())
-                    .fechaCreacion(topperUltralight.getFechaCreacion())
-                    .disponibilidad(topperUltralight.getDisponibilidadGeneral())
-                    .defaultProducto(topperUltralight).build());
-            productos.add(topperUltralight);
+            indamaChardonnay.getPropiedades().add(varietal);
+            indamaChardonnay.setDefaultSku(Sku.builder()
+                    .nombre(indamaChardonnay.getNombre())
+                    .descripcion(indamaChardonnay.getDescripcion())
+                    .fechaCreacion(indamaChardonnay.getFechaCreacion())
+                    .precio(indamaChardonnay.getPrecio())
+                    .disponibilidad(indamaChardonnay.getDisponibilidadGeneral())
+                    .defaultProducto(indamaChardonnay).build());
+            Sku indamaChardonnaySku = Sku.builder()
+                    .nombre(indamaChardonnay.getNombre())
+                    .descripcion(indamaChardonnay.getDescripcion())
+                    //.variedades("95% Chardonnay - 5% Viognier.")
+                    .fechaCreacion(indamaChardonnay.getFechaCreacion())
+                    .precio(indamaChardonnay.getPrecio())
+                    .disponibilidad(indamaChardonnay.getDisponibilidadGeneral())
+                    .valores(new ArrayList<>())
+                    .producto(indamaChardonnay).build();
+            indamaChardonnaySku.getValores().add(chardonnay);
+            indamaChardonnaySku.getValores().add(viognier);
+            productos.add(indamaChardonnay);
 
-            Producto adidasRunfalcon = Producto.builder()
-                    .nombre("Tenis deportivos Adidas Runfalcon")
-                    .descripcion("Capellada elaborada en malla textil con refuerzos de piel sintética. La construcción" +
-                            " no presenta costuras en el upper, para que puedas notar una gran sensación de confort en" +
-                            " todo el pie. Ligera entresuela de EVA, para aportar una amortiguación sencilla y" +
-                            " efectiva, reduciendo el peso del calzado y consiguiendo una pisada confortable." +
-                            " Suela exterior de goma que presenta un patrón con ranuras situadas de forma estratégica" +
-                            " con las que se mejora la flexibilidad del calzado.")
-                    .precio(62.00)
-                    .disponibilidadGeneral(25)
+            Producto bullaBrutNature = Producto.builder()
+                    .nombre("Bulla Brut Nature")
+                    .descripcion("Cosecha: 2020.\n" +
+                            "ALCOHOL: 12,30 % v/v\n" +
+                            "AZÚCAR RESIDUAL: 10.50 g/l\n" +
+                            "PRODUCCIÓN: 3000 Botellas\n" +
+                            "MARIDAJES: Ideal para acompañar mariscos, pescados y pastas.\n" +
+                            "SERVICIO: Recomendamos servir entre 6-8°C de temperatura.")
+                    .precio(800.00)
+                    .disponibilidadGeneral(99)
                     .foto(null)
                     .imagenes(new ArrayList<>())
                     .activo(true)
                     .destacado(true)
                     .fechaCreacion(new Date())
                     .subcategoria(this.subcategoriaRepository.getOne(4L))
-                    .marca(this.marcaRepository.getOne(6L))
+                    .marca(this.marcaRepository.getOne(1L))
                     .unidadMedida(this.unidadMedidaRepository.getOne(1L))
                     .propiedades(new ArrayList<>())
                     .skus(new ArrayList<>()).build();
-            adidasRunfalcon.getPropiedades().add(color);
-            adidasRunfalcon.getPropiedades().add(talle);
-            adidasRunfalcon.setDefaultSku(Sku.builder()
-                    .nombre(adidasRunfalcon.getNombre())
-                    .descripcion(adidasRunfalcon.getDescripcion())
-                    .precio(adidasRunfalcon.getPrecio())
-                    .fechaCreacion(adidasRunfalcon.getFechaCreacion())
-                    .disponibilidad(adidasRunfalcon.getDisponibilidadGeneral())
-                    .defaultProducto(adidasRunfalcon).build());
-            productos.add(adidasRunfalcon);
 
-            // Guardamos los productos y sus skus por defecto
+            bullaBrutNature.getPropiedades().add(dulzor);
+            bullaBrutNature.setDefaultSku(Sku.builder()
+                    .nombre(bullaBrutNature.getNombre())
+                    .descripcion(bullaBrutNature.getDescripcion())
+                    .fechaCreacion(bullaBrutNature.getFechaCreacion())
+                    .precio(bullaBrutNature.getPrecio())
+                    .disponibilidad(bullaBrutNature.getDisponibilidadGeneral())
+                    .defaultProducto(bullaBrutNature).build());
+            Sku bullaBrutNatureSku = Sku.builder()
+                    .nombre(bullaBrutNature.getNombre())
+                    .descripcion(bullaBrutNature.getDescripcion())
+                    //.variedades("Dulce.")
+                    .fechaCreacion(bullaBrutNature.getFechaCreacion())
+                    .precio(bullaBrutNature.getPrecio())
+                    .disponibilidad(bullaBrutNature.getDisponibilidadGeneral())
+                    .valores(new ArrayList<>())
+                    .producto(bullaBrutNature).build();
+            bullaBrutNatureSku.getValores().add(brutNature);
+            productos.add(bullaBrutNature);
+
             this.productoRepository.saveAll(productos);
+            // Cargamos los SKUS principales de cada producto.
+            this.skuService.crearNuevoSku(naviraRoseSku, naviraRose);
+            this.skuService.crearNuevoSku(naviraBlendSku, naviraBlend);
+            this.skuService.crearNuevoSku(indamaChardonnaySku, indamaChardonnay);
+            this.skuService.crearNuevoSku(bullaBrutNatureSku, bullaBrutNature);
         }
     }
 }
