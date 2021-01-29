@@ -59,13 +59,13 @@ public class Sku implements Serializable {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"sku_id", "producto_valores_propiedad_id"})})
     private List<ValorPropiedadProducto> valores;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "default_producto_id")
     @JsonIgnoreProperties(value = {"skus", "defaultSku" , "hibernateLazyInitializer", "handler"}, allowSetters = true)
     @ToString.Exclude
     private Producto defaultProducto;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "producto_id")
     @JsonIgnoreProperties(value = {"skus", "defaultSku" , "hibernateLazyInitializer", "handler"}, allowSetters = true)
     @ToString.Exclude
